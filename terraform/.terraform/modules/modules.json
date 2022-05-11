@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"bigip","Source":"registry.terraform.io/F5Networks/bigip-module/aws","Version":"1.1.3","Dir":".terraform/modules/bigip"},{"Key":"vpc","Source":"registry.terraform.io/terraform-aws-modules/vpc/aws","Version":"2.78.0","Dir":".terraform/modules/vpc"}]}

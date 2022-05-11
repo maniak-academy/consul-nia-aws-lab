@@ -1,1 +1,0 @@
-# consul-nia-aws-lab
