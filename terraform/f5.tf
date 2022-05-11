@@ -14,7 +14,7 @@ resource "null_resource" "admin-shadow" {
   }
 }
 data "template_file" "f5_init" {
-  template = file("../scripts/f5.tpl")
+  template = file("./scripts/f5.tpl")
 
   vars = {
     encrypted_password = chomp(file("admin.shadow"))

@@ -14,6 +14,13 @@ terraform {
       version = "2.2.0"
     }
   }
+    cloud {
+    organization = "sebbycorp"
+
+    workspaces {
+      name = "consul-nia-aws-lab"
+    }
+  }
 }
 
 provider "aws" {
