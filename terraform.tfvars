@@ -2,7 +2,7 @@
 ## prefix will be added to resources created
 #
 
-prefix = "your-prefix"
+prefix = "hashi-cts"
 
 # IP address to allow traffic from
 # recommended to use a /32 (single IP address)
