@@ -14,7 +14,7 @@ terraform {
       version = "2.2.0"
     }
   }
-    cloud {
+  cloud {
     organization = "sebbycorp"
 
     workspaces {
