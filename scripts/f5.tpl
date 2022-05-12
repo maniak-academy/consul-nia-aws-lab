@@ -33,7 +33,10 @@ extension_packages:
       extensionVersion: 1.8.0
       extensionUrl: file:///var/config/rest/downloads/f5-appsvcs-templates-1.8.1-1.noarch.rpm
 extension_services:
-    service_operations: []
+    service_operations:
+    - extensionType: do
+      type: url
+      value: https://raw.githubusercontent.com/maniak-academy/f5-do-templates/main/do.tpl
 post_onboard_enabled:
     - name: custom-config
       type: inline
