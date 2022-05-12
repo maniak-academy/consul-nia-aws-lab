@@ -14,5 +14,5 @@ allow_from = "174.95.219.94/32"
 #
 
 region             = "us-east-1"
-f5_ami_search_name = "F5 BIGIP-15.1.2* PAYG-Good 25Mbps*"
+f5_ami_search_name = "F5 BIGIP-16.1.2* PAYG-Good 25Mbps*"
 f5_username        = "bigipuser"

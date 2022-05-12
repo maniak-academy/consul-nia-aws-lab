@@ -54,7 +54,6 @@ tmsh modify sys global-settings gui-setup disabled
 tmsh modify sys global-settings gui-security-banner-text "Configured via Cloud-Init!"
 
 tmsh save sys config
-rm -f /config/custom-config.sh
 sleep 60
 bigstart restart restnoded
 EOF
