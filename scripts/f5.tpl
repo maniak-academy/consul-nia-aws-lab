@@ -33,10 +33,7 @@ extension_packages:
       extensionVersion: 1.8.0
       extensionUrl: file:///var/config/rest/downloads/f5-appsvcs-templates-1.8.1-1.noarch.rpm
 extension_services:
-    service_operations:
-    - extensionType: do
-      type: url
-      value: https://github.com/maniak-academy/f5-do-templates/blob/main/do.tpl
+    service_operations: []
 post_onboard_enabled:
     - name: custom-config
       type: inline
@@ -52,6 +49,9 @@ wait_bigip_ready
 
 tmsh modify /auth user admin encrypted-password '${encrypted_password}'
 tmsh modify auth user admin shell bash
+
+tmsh modify sys global-settings gui-setup disabled
+tmsh modify sys global-settings gui-security-banner-text "Configured via Cloud-Init!"
 
 tmsh save sys config
 rm -f /config/custom-config.sh

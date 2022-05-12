@@ -10,6 +10,8 @@ output "F5_Username" {
   value = "admin"
 }
 
+
+
 // output "F5_ssh" {
 //   value = "ssh -i ${aws_key_pair.demo.key_name}.pem admin@${module.bigip.0.mgmtPublicIP[0]}"
 //  }

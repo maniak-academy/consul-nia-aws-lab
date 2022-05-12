@@ -50,8 +50,8 @@ resource "aws_security_group" "f5" {
 }
 
 
-resource "aws_security_group" "nginx" {
-  name   = "${var.prefix}-nginx"
+resource "aws_security_group" "webapp" {
+  name   = "${var.prefix}-webapp"
   vpc_id = module.vpc.vpc_id
 
   ingress {
