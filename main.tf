@@ -55,7 +55,7 @@ data "template_file" "nia" {
 }
 resource "local_file" "nia-config" {
   content  = data.template_file.nia.rendered
-  filename = "./cts-config/consul.sh"
+  filename = "./cts-config/cts-config.hcl"
 }
 
 

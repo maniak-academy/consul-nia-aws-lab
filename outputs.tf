@@ -22,3 +22,7 @@ output "Consul_UI" {
 output "Consul_SSH" {
   value = "ssh -i ${aws_key_pair.demo.key_name}.pem ubuntu@${aws_instance.consul.public_ip}"
 }
+
+output "Copy-CTS-Config" {
+  value = "scp -i ${aws_key_pair.demo.key_name}.pem cts-config/cts-config.hcl ubuntu@${aws_instance.consul.public_ip}:/home/ubuntu/"
+}
