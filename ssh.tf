@@ -20,4 +20,5 @@ resource "null_resource" "key" {
     command = "rm -f *.pem"
   }
 
-}
+
+  }
