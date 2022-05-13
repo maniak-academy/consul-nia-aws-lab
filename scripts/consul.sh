@@ -126,32 +126,6 @@ consul {
     }
 }
 
-driver "terraform" {
-  log = true
-  required_providers {
-    bigip = {
-      source = "F5Networks/bigip"
-    }
-  }
-}
-
-
-terraform_provider "bigip" {
-  address  = "10.0.0.200:8443"
-  username = "admin"
-  password = "lGgcyrLzr3BES6JC"	  
-}
-
-task {
-  name = "f5-frontend-workspace"
-  description = "Front end Application Services"
-  module = "github.com/sebbycorp/f5-nia-consul"
-  providers = ["bigip"]
-  condition "services" {
-    names = ["nginx"]
-    datacenter = "dc1"
-  }
-}
 
 EOF
 

@@ -54,18 +54,18 @@ data "aws_ami" "ubuntu" {
 //   }
 // }
 data "template_file" "nia" {
-  template = file("./scripts/config.hcl.example")
+  template = file("./cts-config/config.hcl.example")
   vars = {
-    addr     = module.bigip.0.mgmtPublicIP[0]
-    port     = "8443"
-    username = "admin"
-    pwd      = random_string.password.result
-    consul   = aws_instance.consul.public_ip
+    addr               = "10.0.0.200"
+    port               = "8443"
+    username           = "admin"
+    pwd                = random_string.password.result
+    consul             = aws_instance.consul.private_ip
   }
 }
 resource "local_file" "nia-config" {
   content  = data.template_file.nia.rendered
-  filename = "./scripts/config.hcl"
+  filename = "./cts-config/consul.sh"
 }
 
 // resource "local_file" "tfvars-as3" {
