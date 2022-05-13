@@ -32,7 +32,7 @@ module "bigip" {
   f5_ami_search_name     = var.f5_ami_search_name
   f5_username            = var.f5_username
   f5_password            = random_string.password.result
-  mgmt_subnet_ids        = [{ "subnet_id" = module.vpc.public_subnets[0], "public_ip" = true, "private_ip_primary" = "10.0.0.200" }]
+  mgmt_subnet_ids        = [{ "subnet_id" = module.vpc.public_subnets[0], "public_ip" = true, "private_ip_primary" = "${var.f5mgmtip}" }]
   mgmt_securitygroup_ids = [aws_security_group.f5.id]
   custom_user_data       = data.template_file.f5_init.rendered
 }

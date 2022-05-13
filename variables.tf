@@ -6,6 +6,12 @@ variable "region" {
   description = "AWS region"
   default     = "us-east-1"
 }
+variable "f5mgmtip" {
+  description = "f5 management and vip ip address"
+  default     = "10.0.0.200"
+}
+
+
 
 variable "f5_username" {
   description = "F5 username"
