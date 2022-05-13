@@ -1,7 +1,15 @@
 #!/bin/bash
+local_ipv4="$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)"
 
 #Utils
 sudo apt-get install unzip
+sudo apt-get install unzip
+sudo apt-get update
+sudo apt-get install software-properties-common
+sudo add-apt-repository universe
+sudo apt-get update
+sudo apt-get jq
+
 
 #Download Consul
 CONSUL_VERSION="1.12.0"
@@ -13,6 +21,29 @@ sudo chown root:root consul
 sudo mv consul /usr/local/bin/
 consul -autocomplete-install
 complete -C /usr/local/bin/consul consul
+
+#Install Consul Terraform Sync
+
+export CTS_CONSUL_VERSION="0.6.0-beta1"
+export CONSUL_URL="https://releases.hashicorp.com/consul-terraform-sync"
+
+
+curl --silent --remote-name \
+  ${CONSUL_URL}/${CTS_CONSUL_VERSION}/consul-terraform-sync_${CTS_CONSUL_VERSION}_linux_amd64.zip
+
+curl --silent --remote-name \
+  ${CONSUL_URL}/${CTS_CONSUL_VERSION}/consul-terraform-sync_${CTS_CONSUL_VERSION}_SHA256SUMS
+
+curl --silent --remote-name \
+  ${CONSUL_URL}/${CTS_CONSUL_VERSION}/consul-terraform-sync_${CTS_CONSUL_VERSION}_SHA256SUMS.sig
+
+#Unzip the downloaded package and move the consul binary to /usr/bin/. Check consul is available on the system path.
+
+unzip consul-terraform-sync_${CTS_CONSUL_VERSION}_linux_amd64.zip
+mv consul-terraform-sync /usr/local/bin/consul-terraform-sync
+
+sudo mkdir --parents /opt/consul
+
 
 #Create Consul User
 sudo useradd --system --home /etc/consul.d --shell /bin/false consul
@@ -66,3 +97,68 @@ EOF
 sudo systemctl enable consul
 sudo service consul start
 sudo service consul status
+
+
+
+cat <<EOF > /opt/consul/cts_config.hcl
+log_level = "INFO"
+port = 8558
+syslog {}
+
+buffer_period {
+  enabled = true
+  min     = "5s"
+  max     = "20s"
+}
+
+# vault {
+#     address = "http://192.168.86.69:8200"
+#     token = "hvs.CAESIBZoOLXng8FQ8Qh84dDdrNyGzQdSkvefQYg6eCSv02E1Gh4KHGh2cy5LUER0OXRVUzRQWWc2TFFOQmdENkQyenk"
+# }
+
+id = "cts-01"
+
+
+consul {
+    address = "${local_ipv4}:8500"
+    service_registration {
+      enabled = true
+      service_name = "cts"
+      default_check {
+        enabled = true
+        address = "http://${local_ipv4}:8558"
+      }
+    }
+}
+
+driver "terraform" {
+  log = true
+  required_providers {
+    bigip = {
+      source = "F5Networks/bigip"
+    }
+  }
+}
+
+
+terraform_provider "bigip" {
+  address  = "10.0.0.200:8443"
+  username = "admin"
+  password = "lGgcyrLzr3BES6JC"	  
+}
+
+task {
+  name = "f5-frontend-workspace"
+  description = "Front end Application Services"
+  module = "github.com/maniak-academy/f5-tfc-workspaces"
+  providers = ["bigip"]
+  condition "services" {
+    names = ["nginx"]
+    datacenter = "dc1"
+  }
+}
+
+EOF
+
+
+

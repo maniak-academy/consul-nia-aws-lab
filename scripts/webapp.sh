@@ -59,25 +59,28 @@ EOF
 cat << EOF > /etc/consul.d/client.hcl
 advertise_addr = "${local_ipv4}"
 retry_join = ["provider=aws tag_key=Env tag_value=consul"]
-EOF
-
-cat << EOF > /etc/consul.d/nginx.json
-{
-  "service": {
-    "name": "nginx",
-    "port": 80,
-    "checks": [
-      {
-        "id": "nginx",
-        "name": "nginx TCP Check",
-        "tcp": "localhost:80",
-        "interval": "10s",
-        "timeout": "1s"
-      }
-    ]
+service {
+  id      = "nginx"
+  name    = "nginx"
+  tags    = ["production"]
+  address = "${ip}"
+  port    = 80
+  meta = {
+    VSIP = "10.0.0.200"
+    VSPORT = "8080"
+    AS3TMPL = "http"
+  }
+  check {
+    id       = "nginx"
+    name     = "TCP on port 80"
+    tcp      = "${ip}:80"
+    interval = "10s"
+    timeout  = "1s"
   }
 }
 EOF
+
+
 
 #Enable the service
 sudo systemctl enable consul

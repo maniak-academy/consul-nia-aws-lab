@@ -31,8 +31,9 @@ resource "aws_security_group" "f5" {
     from_port   = 8443
     to_port     = 8443
     protocol    = "tcp"
-    cidr_blocks = [var.allow_from]
+    cidr_blocks = ["10.0.0.0/16", var.allow_from]
   }
+
 
   ingress {
     from_port   = 8080
@@ -115,6 +116,12 @@ resource "aws_security_group" "consul" {
     cidr_blocks = ["10.0.0.0/16"]
   }
 
+  ingress {
+    from_port   = 8558
+    to_port     = 8558
+    protocol    = "tcp"
+    cidr_blocks = ["10.0.0.0/16"]
+  }
   ingress {
     from_port   = 8301
     to_port     = 8301
