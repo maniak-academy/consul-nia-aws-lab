@@ -11,13 +11,13 @@ buffer_period {
 id = "cts-01"
 
 consul {
-    address = "${consul}:8500"
+    address = "10.0.0.100:8500"
     service_registration {
       enabled = true
       service_name = "cts"
       default_check {
         enabled = true
-        address = "http://${consul}:8558"
+        address = "http://10.0.0.100:8558"
       }
     }
 }
@@ -34,9 +34,9 @@ driver "terraform-cloud" {
 }
 
 terraform_provider "bigip" {
-  address  = "${addr}:${port}"
+  address  = "10.0.0.200:8443"
   username = "admin"
-  password = "${pwd}"
+  password = "epE1dpz125yDdHw0"
 }
 
 task {
