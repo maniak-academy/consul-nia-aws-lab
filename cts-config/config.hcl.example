@@ -22,16 +22,15 @@ consul {
     }
 }
 
-driver "terraform-cloud" {
-  hostname = "https://app.terraform.io"
-  organization = "sebbycorp"
-  token        = "XBrDiBLeLuv0yw.atlasv1.unwxsKyHGnIvWt0dIOPZrS83W5HCL8t6Czyd3DxUkkScUBGKwyndxyttB55tisp2rso"
-      required_providers {
-        bigip = {
-            source = "F5Networks/bigip"
-        }
+driver "terraform" {
+  log = true
+  required_providers {
+    bigip = {
+      source = "F5Networks/bigip"
     }
+  }
 }
+
 
 terraform_provider "bigip" {
   address  = "${addr}:${port}"
@@ -40,8 +39,8 @@ terraform_provider "bigip" {
 }
 
 task {
-  name = "f5-secure-webapp-workspace"
-  description = "Secure Web App"
+  name = "f5-frontend-workspace"
+  description = "Front end Application Services"
   module = "github.com/maniak-academy/f5-nia-as3"
   providers = ["bigip"]
   condition "services" {

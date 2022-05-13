@@ -22,15 +22,13 @@ consul {
     }
 }
 
-driver "terraform-cloud" {
-  hostname = "https://app.terraform.io"
-  organization = "sebbycorp"
-  token        = "XBrDiBLeLuv0yw.atlasv1.unwxsKyHGnIvWt0dIOPZrS83W5HCL8t6Czyd3DxUkkScUBGKwyndxyttB55tisp2rso"
-      required_providers {
-        bigip = {
-            source = "F5Networks/bigip"
-        }
+driver "terraform" {
+  log = true
+  required_providers {
+    bigip = {
+      source = "F5Networks/bigip"
     }
+  }
 }
 
 terraform_provider "bigip" {
