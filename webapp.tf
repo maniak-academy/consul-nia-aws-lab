@@ -1,7 +1,7 @@
 resource "aws_autoscaling_group" "webapp" {
   name                 = "${var.prefix}-webapp-asg"
   launch_configuration = aws_launch_configuration.webapp.name
-  desired_capacity     = 2
+  desired_capacity     = 3
   min_size             = 1
   max_size             = 4
   vpc_zone_identifier  = [module.vpc.public_subnets[0]]

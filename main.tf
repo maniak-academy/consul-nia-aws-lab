@@ -53,20 +53,20 @@ data "aws_ami" "ubuntu" {
 //     pwd      = random_string.password.result
 //   }
 // }
-// data "template_file" "nia" {
-//   template = file("../nia/config.hcl.example")
-//   vars = {
-//     addr     = module.bigip.0.mgmtPublicIP[0]
-//     port     = "8443"
-//     username = "admin"
-//     pwd      = random_string.password.result
-//     consul   = aws_instance.consul.public_ip
-//   }
-// // }
-// resource "local_file" "nia-config" {
-//   content  = data.template_file.nia.rendered
-//   filename = "../nia/config.hcl"
-// }
+data "template_file" "nia" {
+  template = file("./scripts/config.hcl.example")
+  vars = {
+    addr     = module.bigip.0.mgmtPublicIP[0]
+    port     = "8443"
+    username = "admin"
+    pwd      = random_string.password.result
+    consul   = aws_instance.consul.public_ip
+  }
+}
+resource "local_file" "nia-config" {
+  content  = data.template_file.nia.rendered
+  filename = "./scripts/config.hcl"
+}
 
 // resource "local_file" "tfvars-as3" {
 //   content  = data.template_file.tfvars.rendered

@@ -60,18 +60,18 @@ cat << EOF > /etc/consul.d/client.hcl
 advertise_addr = "${local_ipv4}"
 retry_join = ["provider=aws tag_key=Env tag_value=consul"]
 service {
-  id      = "nginx"
-  name    = "nginx"
+  id      = "secure-app"
+  name    = "secure-app"
   tags    = ["production"]
   address = "${ip}"
   port    = 80
   meta = {
     VSIP = "10.0.0.200"
-    VSPORT = "8080"
-    AS3TMPL = "http"
+    VSPORT = "443"
+    AS3TMPL = "https"
   }
   check {
-    id       = "nginx"
+    id       = "secure-app"
     name     = "TCP on port 80"
     tcp      = "${ip}:80"
     interval = "10s"

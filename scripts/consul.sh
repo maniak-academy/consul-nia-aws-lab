@@ -111,11 +111,6 @@ buffer_period {
   max     = "20s"
 }
 
-# vault {
-#     address = "http://192.168.86.69:8200"
-#     token = "hvs.CAESIBZoOLXng8FQ8Qh84dDdrNyGzQdSkvefQYg6eCSv02E1Gh4KHGh2cy5LUER0OXRVUzRQWWc2TFFOQmdENkQyenk"
-# }
-
 id = "cts-01"
 
 
@@ -150,7 +145,7 @@ terraform_provider "bigip" {
 task {
   name = "f5-frontend-workspace"
   description = "Front end Application Services"
-  module = "github.com/maniak-academy/f5-tfc-workspaces"
+  module = "github.com/sebbycorp/f5-nia-consul"
   providers = ["bigip"]
   condition "services" {
     names = ["nginx"]
